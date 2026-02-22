@@ -327,6 +327,7 @@ Keep it readable and structured.
 - Request and response schemas must remain consistent and documented via models.
 - Gateway routes must be organized into multiple modules (e.g., `system_routes.py`, `controller_routes.py`) and included in `app.py` via routers. Do not define all endpoints directly in `app.py`.
 - Maintain `docs/curls.md` with short descriptions and curl examples for all endpoints.
+- In `docs/curls.md`, use `dry_run=false` and `raise_on_error=true` in all examples.
 
 # 📌 Final AI Checklist Before Completing Work
 
