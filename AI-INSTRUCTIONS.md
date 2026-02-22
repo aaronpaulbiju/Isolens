@@ -178,6 +178,12 @@ The `/version` endpoint must be updated whenever any part of the project changes
 
 ---
 
+## 1️⃣c Documentation Sync Rule
+
+When API endpoints are added, removed, or modified, `docs/curls.md` must be updated to match.
+
+---
+
 ## 2️⃣ Mandatory Testing Policy
 
 After ANY code change:
@@ -320,6 +326,7 @@ Keep it readable and structured.
 - VM identifiers must be passed in the request body for POST endpoints, not in the URL path.
 - Request and response schemas must remain consistent and documented via models.
 - Gateway routes must be organized into multiple modules (e.g., `system_routes.py`, `controller_routes.py`) and included in `app.py` via routers. Do not define all endpoints directly in `app.py`.
+- Maintain `docs/curls.md` with short descriptions and curl examples for all endpoints.
 
 # 📌 Final AI Checklist Before Completing Work
 
