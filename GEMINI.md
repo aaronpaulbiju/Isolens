@@ -92,6 +92,7 @@ Contains expandable submodules such as:
 - Risk scoring
 - YARA rule generation
 - Pattern detection utilities
+- VBoxManage output parsing
 
 This layer converts raw monitoring data into structured findings.
 

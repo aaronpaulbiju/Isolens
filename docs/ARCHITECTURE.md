@@ -18,7 +18,7 @@ The orchestration brain that coordinates the VM lifecycle and analysis workflow,
 Guest-side API service running inside the isolated container/VM. It gathers logs and tool outputs from within the sandbox.
 
 ### `core/modules/`
-Functional processing layer for parsing logs, extracting IOCs, and risk scoring.
+Functional processing layer for parsing logs, extracting IOCs, risk scoring, and parsing VBoxManage outputs.
 
 ### `core/observer/`
 Monitoring layer that collects raw data from the host perspective (process tracking, network, etc.).

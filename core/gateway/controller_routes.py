@@ -15,6 +15,10 @@ from core.gateway.api_models import (
     VMInfoRequest,
     VMStartRequest,
 )
+from core.modules.vbox_output_parser import (
+    parse_list_vms,
+    parse_showvminfo,
+)
 
 router = APIRouter(prefix="/api/vms", tags=["vms"])
 
@@ -35,12 +39,26 @@ def _client(dry_run: bool, raise_on_error: bool) -> VBoxManageClient:
     return VBoxManageClient(dry_run=dry_run, raise_on_error=raise_on_error)
 
 
+def _action_response(result, *, dry_run: bool) -> dict:
+    """Build a response for action endpoints (start, poweroff, etc.)."""
+    data: dict = {
+        "success": result.returncode == 0,
+        "message": result.stdout.strip() or result.stderr.strip() or "OK",
+    }
+    if dry_run:
+        data["debug"] = result.to_dict()
+    return data
+
+
 @router.get("", response_model=StandardResponse)
 def list_vms(dry_run: bool = False, raise_on_error: bool = True) -> StandardResponse:
     try:
         client = _client(dry_run=dry_run, raise_on_error=raise_on_error)
         result = client.list_vms()
-        return _ok(result.to_dict())
+        data: dict = {"vms": parse_list_vms(result.stdout)}
+        if dry_run:
+            data["debug"] = result.to_dict()
+        return _ok(data)
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -55,7 +73,10 @@ def list_running_vms(
     try:
         client = _client(dry_run=dry_run, raise_on_error=raise_on_error)
         result = client.list_running_vms()
-        return _ok(result.to_dict())
+        data: dict = {"vms": parse_list_vms(result.stdout)}
+        if dry_run:
+            data["debug"] = result.to_dict()
+        return _ok(data)
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -68,7 +89,14 @@ def vm_info(payload: VMInfoRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.show_vm_info(payload.vm, machinereadable=payload.machinereadable)
-        return _ok(result.to_dict())
+        if payload.machinereadable:
+            parsed = parse_showvminfo(result.stdout)
+        else:
+            parsed = {"raw_text": result.stdout}
+        data: dict = {"info": parsed}
+        if payload.dry_run:
+            data["debug"] = result.to_dict()
+        return _ok(data)
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -81,7 +109,7 @@ def vm_start(payload: VMStartRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.start_vm(payload.vm, headless=payload.headless)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -94,7 +122,7 @@ def vm_poweroff(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.poweroff_vm(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -107,7 +135,7 @@ def vm_savestate(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.savestate_vm(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -120,7 +148,7 @@ def vm_pause(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.pause_vm(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -133,7 +161,7 @@ def vm_resume(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.resume_vm(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -146,7 +174,7 @@ def vm_reset(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.reset_vm(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -159,7 +187,7 @@ def vm_shutdown(payload: VMControlRequest, force: bool = False) -> StandardRespo
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.shutdown_vm(payload.vm, force=force)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -172,7 +200,7 @@ def snapshot_take(payload: SnapshotRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.snapshot_take(payload.vm, payload.name)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -185,7 +213,7 @@ def snapshot_restore(payload: SnapshotRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.snapshot_restore(payload.vm, payload.name)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
@@ -198,7 +226,7 @@ def snapshot_restore_current(payload: VMControlRequest) -> StandardResponse:
     try:
         client = _client(dry_run=payload.dry_run, raise_on_error=payload.raise_on_error)
         result = client.snapshot_restore_current(payload.vm)
-        return _ok(result.to_dict())
+        return _ok(_action_response(result, dry_run=payload.dry_run))
     except RuntimeError as exc:
         return JSONResponse(
             status_code=500,
