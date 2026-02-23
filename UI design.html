@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Scan Dashboard</title>
+
+<!-- Google Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #6750A4;
+  --primary-light: #EADDFF;
+  --background: #F8F9FA;
+  --surface: #FFFFFF;
+  --text-primary: #1C1B1F;
+  --text-secondary: #49454F;
+  --border: #E0E0E0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  display: flex;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  padding-top: 20px;
+  position: fixed;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--text-secondary);
+}
+
+.nav-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.nav-item i {
+  margin-right: 16px;
+}
+
+/* Main Content */
+.main {
+  margin-left: 240px;
+  padding: 30px;
+  width: calc(100% - 240px);
+}
+
+.header {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.card {
+  background-color: var(--surface);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #53389E;
+}
+
+input[type="file"] {
+  margin-bottom: 15px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.status-active {
+  color: green;
+  font-weight: 500;
+}
+
+.status-inactive {
+  color: red;
+  font-weight: 500;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>Scanner</h2>
+
+  <div class="nav-item">
+    <i class="material-icons">search</i> Scan
+  </div>
+
+  <div class="nav-item">
+    <i class="material-icons">description</i> Reports
+  </div>
+
+  <div class="nav-item">
+    <i class="material-icons">history</i> Scan History
+  </div>
+
+  <div class="nav-item">
+    <i class="material-icons">security</i> Sand Box
+  </div>
+
+  <div class="nav-item">
+    <i class="material-icons">settings</i> Settings
+  </div>
+
+  <div class="nav-item">
+    <i class="material-icons">support</i> Help & Support
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Scan Section -->
+  <div class="header">Scan</div>
+  <div class="card">
+    <input type="file">
+    <br>
+    <button>Upload & Scan</button>
+  </div>
+
+  <!-- Reports Section -->
+  <div class="header">Reports</div>
+  <div class="card">
+    <table class="table">
+      <tr>
+        <th>Report ID</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>#1001</td>
+        <td>2026-02-20</td>
+        <td class="status-active">Completed</td>
+      </tr>
+      <tr>
+        <td>#1002</td>
+        <td>2026-02-21</td>
+        <td class="status-inactive">Pending</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Scan History Section -->
+  <div class="header">Scan History</div>
+  <div class="card">
+    <p>List of previously scanned files will appear here.</p>
+  </div>
+
+  <!-- Sandbox Section -->
+  <div class="header">Sand Box</div>
+  <div class="card">
+    <p>Sandbox Status: <span class="status-active">Active</span></p>
+    <button>Start Sandbox</button>
+    <button>Stop Sandbox</button>
+  </div>
+
+  <!-- Settings Section -->
+  <div class="header">Settings</div>
+  <div class="card">
+    <p>Configure scanning preferences and system options.</p>
+  </div>
+
+  <!-- Help & Support -->
+  <div class="header">Help & Support</div>
+  <div class="card">
+    <p>Contact support or view documentation.</p>
+    <button>Contact Support</button>
+  </div>
+
+</div>
+
+</body>
+</html>
