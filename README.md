@@ -45,4 +45,4 @@ The `scripts/` directory contains utility scripts for project maintenance:
 
 Below is the Material Themed Dashboard UI:
 
-![Frontend Interface](UI-design.png)
+![Frontend Interface](docs/UI-design.png)
