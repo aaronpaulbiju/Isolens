@@ -47,3 +47,30 @@ Below is the Material Themed Dashboard UI:
 - [ADITHI ASOK](https://github.com/kaalibindhi/)
 - [IRFAN VS](https://github.com/Irfanvs/)
 
+## UI Design Concepts
+
+### Dashboard
+Main monitoring interface displaying scan statistics and system status.
+
+![Dashboard](docs/UI/dashboard.png)
+
+---
+
+### Reports Page
+Displays detailed malware analysis reports with risk level badges.
+
+![Reports](docs/UI/reports.png)
+
+---
+
+### Sandbox View
+Shows VM status and sandbox control panel.
+
+![Sandbox](docs/UI/sandbox.png)
+
+---
+
+### Help & Support
+Provides documentation, FAQs, and troubleshooting information.
+
+![Help & Support](docs/UI/help-support.png)
