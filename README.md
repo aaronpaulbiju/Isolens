@@ -49,28 +49,42 @@ Below is the Material Themed Dashboard UI:
 
 ## UI Design Concepts
 
-### Dashboard
-Main monitoring interface displaying scan statistics and system status.
+### 1. Scan Page
+Main interface to upload files and start malware analysis.
 
-![Dashboard](docs/UI/dashboard.png)
-
----
-
-### Reports Page
-Displays detailed malware analysis reports with risk level badges.
-
-![Reports](docs/UI/reports.png)
+![Scan Page](docs/UI/1.%20Scan%20Page.png)
 
 ---
 
-### Sandbox View
-Shows VM status and sandbox control panel.
+### 2. Reports Page
+Displays detailed malware analysis reports and risk levels.
 
-![Sandbox](docs/UI/sandbox.png)
+![Reports Page](docs/UI/2.%20Reports%20Page.png)
 
 ---
 
-### Help & Support
-Provides documentation, FAQs, and troubleshooting information.
+### 3. Scan History Page
+Shows previous scans and their statuses.
 
-![Help & Support](docs/UI/help-support.png)
+![Scan History Page](docs/UI/3.%20Scan%20History%20Page.png)
+
+---
+
+### 4. Sandbox Page
+Displays VM status and sandbox controls.
+
+![Sandbox Page](docs/UI/4.%20Sandbox%20Page.png)
+
+---
+
+### 5. Settings Page
+Allows configuration of system and sandbox parameters.
+
+![Settings Page](docs/UI/5.%20Settings%20Page.png)
+
+---
+
+### 6. Help & Support Page
+Provides documentation, FAQ, and troubleshooting help.
+
+![Help & Support Page](docs/UI/6.%20Help%20%26%20Support%20Page.png)
