@@ -28,11 +28,17 @@ Detailed information can be found in the `docs/` folder:
 - [**Architecture Overview**](docs/ARCHITECTURE.md): Technical breakdown of the modular system design and component responsibilities.
 - [**Project Idea & Concept**](docs/IDEA.md): The core vision, problem statement, and proposed workflow for the automated sandbox.
 - [**Sandbox VM Setup**](docs/SANDBOX_VM_SETUP.md): A comprehensive guide on setting up the isolated Windows 7 analysis environment.
+- [**UI Components Plan**](docs/UI_COMPONENT_PLAN.md): Complete UI components Plan
 
 ## 🛠 Scripts
 
 The `scripts/` directory contains utility scripts for project maintenance:
 - `sync_ai_docs.py`: Synchronizes the content of `AGENTS.md` (the source of truth) to all other AI instruction files (`GEMINI.md`, `AI-INSTRUCTIONS.md`, and `.github/copilot-instructions.md`). Run this after any update to `AGENTS.md`.
+## Frontend Interface
+
+Below is the Material Themed Dashboard UI:
+
+![Frontend Interface](docs/UI-design.png)
 
 ## 👥 Contributors
 
@@ -41,8 +47,3 @@ The `scripts/` directory contains utility scripts for project maintenance:
 - [ADITHI ASOK](https://github.com/kaalibindhi/)
 - [IRFAN VS](https://github.com/Irfanvs/)
 
-## Frontend Interface
-
-Below is the Material Themed Dashboard UI:
-
-![Frontend Interface](UI-design.png)
